@@ -41,6 +41,7 @@ class Gamerun(pyglet.window.Window):
         file = open("rscore.txt", "r")
         self.recscore = file.read()
         file.close
+        self.maxspeed = 6
 
     def on_draw(self):
         self.clear()
@@ -136,6 +137,10 @@ class Gamerun(pyglet.window.Window):
 
             pyglet.app.exit()
 
+        if self.score < 100:
+            if self.score > 30:
+                self.maxspeed = round(self.score / 10)
+
     def on_key_press(self, symbol, modifier):
         if symbol == 102:
             self.check_collision1(self.pointer1, self.tilesp1)
@@ -172,7 +177,7 @@ class Gamerun(pyglet.window.Window):
 
         if self.bounding_box_collision(pointer1_box, tilesp1_box):
             self.on_loose1 = False
-            self.tile1speed = random.randint(2, 6)
+            self.tile1speed = random.randint(2, self.maxspeed)
             self.color = (random.randint(1, 255), random.randint(1, 255), random.randint(1, 255))
             self.tilesp1.color = self.color
         else:
@@ -195,7 +200,7 @@ class Gamerun(pyglet.window.Window):
 
         if self.bounding_box_collision(pointer2_box, tilesp2_box):
             self.on_loose2 = False
-            self.tile2speed = random.randint(2, 6)
+            self.tile2speed = random.randint(2, self.maxspeed)
             self.color = (random.randint(1, 255), random.randint(1, 255), random.randint(1, 255))
             self.tilesp2.color = self.color
         else:
@@ -218,7 +223,7 @@ class Gamerun(pyglet.window.Window):
 
         if self.bounding_box_collision(pointer3_box, tilesp3_box):
             self.on_loose3 = False
-            self.tile3speed = random.randint(2, 6)
+            self.tile3speed = random.randint(2, self.maxspeed)
             self.color = (random.randint(1, 255), random.randint(1, 255), random.randint(1, 255))
             self.tilesp3.color = self.color
         else:
